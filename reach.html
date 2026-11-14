@@ -79,7 +79,7 @@ input[type=number]{width:66px}
 .hint{font-size:12px;color:var(--muted)}
 
 /* ---------- kpi ---------- */
-.kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(124px,1fr));gap:10px}
 .kpi{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
 .kpi .k{font-size:11.5px;color:var(--muted);margin-bottom:2px}
 .kpi .v{font-size:22px;font-weight:660;letter-spacing:-.02em;line-height:1.15}
@@ -98,6 +98,7 @@ input[type=number]{width:66px}
 .fbar.g3{background:linear-gradient(90deg,#94a9f5,#7189e8)}
 .fbar.g4{background:linear-gradient(90deg,#aebdf8,#8fa3ee)}
 .fbar.g5{background:linear-gradient(90deg,#22a06b,#0f7a45)}
+.fbar.g6{background:linear-gradient(90deg,#0f7a45,#0a5c33)}
 .fmeta{text-align:right;font-size:12.5px;color:var(--ink-2);font-variant-numeric:tabular-nums}
 .fmeta b{font-size:14px;font-weight:640}
 .fmeta i{font-style:normal;color:var(--muted);font-size:11.5px;margin-left:6px}
@@ -158,6 +159,21 @@ details pre{
 .drawer-head{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;border-bottom:1px solid var(--line)}
 .drawer-head h3{font-size:14px}
 .drawer-body{padding:16px 18px 28px;overflow:auto;display:flex;flex-direction:column;gap:14px}
+
+/* ---------- 二次触达弹窗 ---------- */
+.modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-46%);width:540px;max-width:92vw;max-height:86vh;
+  overflow:auto;background:#fff;border:1px solid var(--line);border-radius:16px;z-index:60;opacity:0;
+  pointer-events:none;transition:.2s;box-shadow:0 24px 60px -24px rgba(16,24,40,.45)}
+.modal.on{opacity:1;pointer-events:auto;transform:translate(-50%,-50%)}
+.modal-head{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--line)}
+.modal-head h3{font-size:14px}
+.modal-body{padding:16px 18px 20px}
+.statline{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 14px}
+.statline span{font-size:12px;background:#f5f6f8;border:1px solid var(--line-soft);border-radius:8px;padding:4px 9px;color:var(--ink-2)}
+.chip.fu{background:#f0f0f2;color:#6b7280}
+.chip.rep-yes{background:var(--accent);color:#fff}
+.chip.rep-later{background:var(--warn-soft);color:var(--warn)}
+.chip.rep-no{background:#fdecea;color:var(--danger)}
 .drawer-body label{display:block;font-size:12.5px;color:var(--ink-2);font-weight:560}
 textarea{
   width:100%;margin-top:6px;padding:10px 12px;border:1px solid var(--line);border-radius:9px;
@@ -196,6 +212,34 @@ textarea{
 .tracked{font-size:11.5px;color:var(--ok);background:var(--ok-soft);padding:5px 10px;border-radius:999px;border:1px solid #c9ecd8}
 .cardback{font-size:12.5px}
 
+/* ---------- 回应区（接收方视角） ---------- */
+.replybox{margin-top:20px;padding-top:18px;border-top:1px solid var(--line-soft)}
+.replybox h4{font-size:13px;font-weight:640;margin:0 0 4px}
+.replybox .rdesc{font-size:12px;color:var(--muted);margin-bottom:11px;line-height:1.65}
+.rbtns{display:flex;gap:8px;flex-wrap:wrap}
+.rb{
+  padding:9px 14px;border-radius:10px;border:1px solid var(--line);background:#fff;
+  font-size:13px;color:var(--ink-2);cursor:pointer;transition:.15s;
+}
+.rb:hover{background:#f7f8fa;border-color:#d8dbe2}
+.rb.yes{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:560}
+.rb.yes:hover{background:var(--accent-ink);border-color:var(--accent-ink)}
+.rb.no{color:var(--danger)}
+.rb.no:hover{background:#fdf3f2;border-color:#f3d3cf}
+.rnote{
+  width:100%;margin-top:10px;padding:9px 11px;border:1px solid var(--line);border-radius:9px;
+  font-family:inherit;font-size:12.5px;resize:vertical;color:var(--ink);background:#fff;
+}
+.rstate{display:flex;gap:10px;align-items:flex-start;background:#fafbfc;border:1px solid var(--line-soft);
+  border-radius:10px;padding:12px 14px}
+.rstate .dot{width:8px;height:8px;border-radius:50%;margin-top:6px;flex:0 0 auto;background:var(--accent)}
+.rstate.later .dot{background:var(--warn)}
+.rstate.no .dot{background:var(--danger)}
+.rstate .txt{font-size:12.5px;color:var(--ink-2);line-height:1.65}
+.rstate .txt b{display:block;font-size:13px;color:var(--ink);margin-bottom:2px}
+.rstate .note{margin-top:5px;color:var(--muted);font-style:normal}
+.rchange{margin-top:10px}
+
 @media (max-width:980px){
   .kpis{grid-template-columns:repeat(3,1fr)}
   .paper{max-width:none}
@@ -216,7 +260,7 @@ textarea{
       <div class="logo">R</div>
       <div>
         <h1>NeurIPS 2026 参会人触达</h1>
-        <p>arXiv 真实快照 → 姓名归一去重 → 个性化渲染 → dry-run 投递 → 唯一链接点击追踪 → 漏斗看板</p>
+        <p>arXiv 真实快照 → 姓名归一去重 → 个性化渲染 → dry-run 投递 → 唯一链接点击追踪 → 对方回应 → 漏斗看板</p>
       </div>
     </div>
     <div class="actions">
@@ -263,7 +307,7 @@ textarea{
         <thead><tr>
           <th style="width:150px">姓名</th>
           <th>论文 / 来源</th>
-          <th style="width:104px">状态</th>
+          <th style="width:140px">状态</th>
           <th style="width:126px">追踪链接</th>
           <th style="width:110px">草稿</th>
         </tr></thead>
@@ -271,7 +315,8 @@ textarea{
       </table>
     </div>
     <p class="hint" style="margin-top:10px">
-      追踪机制：每位联系人拿到一条 <code>#/c/&lt;hash&gt;</code> 链接，对方打开即写入一次点击事件。
+      追踪机制：每位联系人拿到一条 <code>#/c/&lt;hash&gt;</code> 链接，对方打开即写入一次点击事件；
+      名片页上的「回应」按钮则会写入一条带语义的回应（想聊 / 改天 / 不需要），看板据此排序并切换跟进模板。
       单文件版把事件落在本机浏览器（localStorage），所以同机演示完全跑通；跨人真实追踪需服务端版 <code>reach.py</code>。
     </p>
   </section>
@@ -300,6 +345,9 @@ textarea{
     <label>邮件正文模板
       <textarea id="cfgBody" rows="9"></textarea>
     </label>
+    <label>对方回应「想聊」后的跟进模板
+      <textarea id="cfgFollowYes" rows="7"></textarea>
+    </label>
     <p class="hint">可用占位符：<code>{name}</code> <code>{paper}</code> <code>{paper60}</code> <code>{paper80}</code> <code>{link}</code> <code>{profile}</code></p>
     <div class="row">
       <button class="btn primary" id="btnSaveCfg">保存并重算草稿</button>
@@ -308,6 +356,27 @@ textarea{
     <p class="hint" id="cfgSaved"></p>
   </div>
 </aside>
+
+<div class="scrim" id="fuScrim"></div>
+<div class="modal" id="fuModal">
+  <div class="modal-head">
+    <h3>二次触达</h3>
+    <button class="x" id="fuClose" aria-label="关闭">×</button>
+  </div>
+  <div class="modal-body">
+    <div id="fuWho" style="font-size:14px;font-weight:600"></div>
+    <div id="fuPaper" style="font-size:12px;color:var(--muted);margin-top:2px"></div>
+    <div class="statline" id="fuStats"></div>
+    <label style="font-size:12.5px;color:var(--ink-2);font-weight:560">跟进草稿（刻意见：不写"我看到您打开了"）
+      <textarea id="fuText" rows="9"></textarea>
+    </label>
+    <div class="row" style="margin-top:12px">
+      <button class="btn sm primary" id="fuCopy">复制</button>
+      <button class="btn sm" id="fuMark">标记已跟进</button>
+      <span class="hint">一封冷邮件 + 一次跟进就停，别发第三次</span>
+    </div>
+  </div>
+</div>
 
 <div id="toast"></div>
 
@@ -353,6 +422,26 @@ const DEFAULT_CFG = {
     "我今年也会在 NeurIPS 2026 现场，方便的话看下我的名片：{link}",
     "",
     "（不希望再收到，回 STOP 即可）"
+  ].join("\n"),
+  followup: [
+    "Hi {name}，",
+    "",
+    "上周给您发过我的名片，不知道您会不会来 NeurIPS 2026 现场？",
+    "",
+    "我这次也会在场，如果方便，10 分钟就够——我在 Poster 区，您方便的时间我都可以过去。",
+    "",
+    "不用特意回复，现场遇到也很好。"
+  ].join("\n"),
+  /* 对方已经明确"想聊"时用这封：不再问要不要，直接给时间窗 */
+  followupYes: [
+    "Hi {name}，",
+    "",
+    "谢谢回复！那就约在 NeurIPS 2026 现场。",
+    "",
+    "我 12/9–12/12 都在，Poster 区和工作坊都能过去，15 分钟就够。",
+    "您方便的时间直接告诉我，或者我们先在线上过一遍您《{paper60}》里的问题清单。",
+    "",
+    "如果这两天没空，回个「改天」我就先不打扰，会后再联系。"
   ].join("\n")
 };
 
@@ -365,12 +454,13 @@ function loadState() {
       const s = JSON.parse(raw);
       if (s && Array.isArray(s.people)) {
         s.clicks = s.clicks || [];
+        s.replies = s.replies || [];
         s.cfg = Object.assign({}, DEFAULT_CFG, s.cfg || {});
         return s;
       }
     }
   } catch (e) { /* 损坏则重建 */ }
-  return { people: [], msgs: [], clicks: [], cfg: { ...DEFAULT_CFG } };
+  return { people: [], msgs: [], clicks: [], replies: [], cfg: { ...DEFAULT_CFG } };
 }
 function saveState() {
   try { store.set(LS_KEY, JSON.stringify(state)); } catch (e) { /* 容量满时忽略 */ }
@@ -399,6 +489,39 @@ function msgHash(name, paper) {
 }
 function cardURL(h) {
   return location.href.split("#")[0] + "#/c/" + h;
+}
+
+/* ---------- 回应：唯一能证明「联系上了」的信号 ----------
+ * 点击 = 注意力（可能误触、可能只是打开），回应 = 关系（对方主动表达了意愿）。
+ * 所以两者分开存：clicks 可重复计数，replies 追加式留痕，最新一条决定后续行为。
+ */
+const REPLY_KIND = {
+  yes: { label: "想聊，约个时间", short: "想聊", chip: "rep-yes", rank: 3 },
+  later: { label: "先不了，改天", short: "改天", chip: "rep-later", rank: 2 },
+  no: { label: "不需要，不再联系", short: "已拒绝", chip: "rep-no", rank: 1 }
+};
+const repliesOf = hash => state.replies.filter(r => r.hash === hash);
+function latestReply(hash) {
+  const rs = repliesOf(hash);
+  return rs.length ? rs[rs.length - 1] : null;
+}
+function isClosed(hash) {
+  const r = latestReply(hash);
+  return !!(r && r.kind === "no");
+}
+function addReply(hash, kind, note) {
+  // 追加而非覆盖：每次改主意都是一条新证据，最新一条生效，历史留在漏斗里
+  state.replies.push({
+    hash, kind,
+    note: String(note || "").replace(/\s+/g, " ").trim().slice(0, 300),
+    ts: nowStr(), ua: navigator.userAgent.slice(0, 160)
+  });
+  saveState();
+}
+/* 回应会改变下一步动作：说"想聊"的人收到的是约时间，不是再问一遍要不要 */
+function followTemplate(hash) {
+  const r = latestReply(hash);
+  return r && r.kind === "yes" ? state.cfg.followupYes : state.cfg.followup;
 }
 
 function fill(tpl, ctx) {
@@ -479,10 +602,18 @@ function loadPeople(queryLabel, limit) {
 }
 
 function sendAll() {
-  let n = 0;
-  for (const m of state.msgs) if (!m.sent) { m.sent = 1; n++; }
+  let n = 0, closed = 0;
+  for (const m of state.msgs) {
+    if (m.sent) continue;
+    if (isClosed(m.hash)) { closed++; continue; }
+    m.sent = 1; n++;
+  }
   saveState(); render();
-  toast(n ? `dry-run 投递 ${n} 封（未真正发信：SMTP 凭据在真实版配置）` : "没有待投递的草稿");
+  if (n) {
+    toast(`dry-run 投递 ${n} 封${closed ? ` · 跳过 ${closed} 位已明确拒绝` : ""}（未真正发信：SMTP 凭据在真实版配置）`);
+  } else {
+    toast(closed ? `没有待投递的草稿（${closed} 位已明确拒绝，不再触达）` : "没有待投递的草稿");
+  }
 }
 
 function pickVisitor() {
@@ -497,18 +628,20 @@ function pickVisitor() {
 
 function resetAll() {
   if (!confirm("清空本机保存的名单、草稿与点击记录？此操作不可撤销。")) return;
-  state = { people: [], msgs: [], clicks: [], cfg: state.cfg };
+  state = { people: [], msgs: [], clicks: [], replies: [], cfg: state.cfg };
   saveState(); render(); toast("已重置");
 }
 
 function exportCSV() {
   if (!state.people.length) return toast("没有可导出的数据", true);
-  const rows = [["姓名", "论文", "类目", "来源", "追踪链接", "状态", "点击次数"]];
+  const rows = [["姓名", "论文", "类目", "来源", "追踪链接", "状态", "点击次数", "回应", "回应时间", "留言"]];
   for (const p of state.people) {
     const m = state.msgs.find(x => x.hash === p.hash);
     const c = state.clicks.filter(x => x.hash === p.hash).length;
+    const r = latestReply(p.hash);
     rows.push([p.name, p.paper, p.cat, p.source, cardURL(p.hash),
-      m && m.sent ? "已投递(dry)" : "草稿", String(c)]);
+      m && m.sent ? "已投递(dry)" : "草稿", String(c),
+      r ? REPLY_KIND[r.kind].label : "", r ? r.ts : "", r ? r.note : ""]);
   }
   const csv = "\ufeff" + rows.map(r => r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(",")).join("\r\n");
   const a = document.createElement("a");
@@ -519,11 +652,53 @@ function exportCSV() {
   toast("已导出 CSV");
 }
 
+function copyText(text) {
+  const done = () => toast("已复制");
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(text).then(done).catch(() => fallbackCopy(text, done));
+  } else fallbackCopy(text, done);
+}
+
+/* ---------- 二次触达：从一次点击推到一次约见 ---------- */
+function openFollow(hash) {
+  const p = state.people.find(x => x.hash === hash);
+  if (!p) return;
+  if (isClosed(hash)) return toast(`${p.name} 已明确拒绝，不再触达`, true);
+  const cs = state.clicks.filter(c => c.hash === hash).sort((a, b) => (a.ts < b.ts ? -1 : 1));
+  const r = latestReply(hash);
+  $("fuWho").textContent = p.name;
+  $("fuPaper").textContent = "《" + p.paper + "》";
+  $("fuStats").innerHTML =
+    `<span>点击 ${cs.length} 次</span>` +
+    (r ? `<span style="background:var(--accent-soft);border-color:#d6ddfa;color:var(--accent-ink)">对方回应：${REPLY_KIND[r.kind].label}</span>` : "") +
+    `<span>首次 ${esc(cs.length ? cs[0].ts : "-")}</span>` +
+    `<span>最近 ${esc(cs.length ? cs[cs.length - 1].ts : "-")}</span>` +
+    (r && r.note ? `<span>留言：${esc(r.note)}</span>` : "");
+  // 有明确回应就换模板：说"想聊"的人不该再被问一次要不要
+  $("fuText").value = fill(followTemplate(hash), {
+    name: p.name,
+    paper: p.paper,
+    paper60: p.paper.length > 60 ? p.paper.slice(0, 60) + "…" : p.paper,
+    clicks: cs.length,
+    first: cs.length ? cs[0].ts : "",
+    last: cs.length ? cs[cs.length - 1].ts : ""
+  });
+  $("fuMark").dataset.hash = hash;
+  $("fuModal").classList.add("on");
+  $("fuScrim").classList.add("on");
+}
+function closeFollow() {
+  $("fuModal").classList.remove("on");
+  $("fuScrim").classList.remove("on");
+}
+
 function saveCfg() {
   state.cfg = {
     profile: $("cfgProfile").value.trim() || DEFAULT_CFG.profile,
     subject: $("cfgSubject").value.trim() || DEFAULT_CFG.subject,
-    body: $("cfgBody").value || DEFAULT_CFG.body
+    body: $("cfgBody").value || DEFAULT_CFG.body,
+    followup: state.cfg.followup || DEFAULT_CFG.followup,
+    followupYes: $("cfgFollowYes").value || DEFAULT_CFG.followupYes
   };
   const byHash = new Map(state.msgs.map(m => [m.hash, m]));
   state.msgs = state.people.map(p => {
@@ -543,6 +718,16 @@ function stats() {
   const sent = state.msgs.filter(m => m.sent).length;
   const clicks = state.clicks.length;
   const uniqueClickers = new Set(state.clicks.map(c => c.hash)).size;
+  const repliedHashes = new Set(state.replies.map(r => r.hash));
+  // 最新一条回应才算数：改主意的人不该同时被计进"想聊"和"已拒绝"
+  let interested = 0, later = 0, refused = 0;
+  for (const h of repliedHashes) {
+    const r = latestReply(h);
+    if (!r) continue;
+    if (r.kind === "yes") interested++;
+    else if (r.kind === "later") later++;
+    else refused++;
+  }
   return {
     papers,
     people: state.people.length,
@@ -550,7 +735,12 @@ function stats() {
     sent,
     clicks,
     uniqueClickers,
-    ctr: sent ? Math.round((uniqueClickers / sent) * 1000) / 10 : 0
+    ctr: sent ? Math.round((uniqueClickers / sent) * 1000) / 10 : 0,
+    replied: repliedHashes.size,
+    interested,
+    later,
+    refused,
+    replyRate: sent ? Math.round((repliedHashes.size / sent) * 1000) / 10 : 0
   };
 }
 
@@ -563,7 +753,9 @@ function render() {
     ["消息草稿", s.msgs, ""],
     ["已投递", s.sent, "dry-run"],
     ["点击次数", s.clicks, ""],
-    ["点击率", s.ctr, "%", true]
+    ["点击率", s.ctr, "%"],
+    ["回应人数", s.replied, ""],
+    ["回应率", s.replyRate, "%", true]
   ].map(([k, v, sub, hl]) =>
     `<div class="kpi${hl ? " hl" : ""}"><div class="k">${k}</div>
      <div class="v">${v}${sub ? `<small>${sub}</small>` : ""}</div></div>`
@@ -574,7 +766,8 @@ function render() {
     ["人群", s.people, "g2"],
     ["草稿", s.msgs, "g3"],
     ["已投递", s.sent, "g4"],
-    ["点击", s.uniqueClickers, "g5"]
+    ["点击", s.uniqueClickers, "g5"],
+    ["回应", s.replied, "g6"]
   ];
   const max = Math.max(1, ...stages.map(x => x[1]));
   $("funnel").innerHTML = stages.map((st, i) => {
@@ -589,8 +782,8 @@ function render() {
     </div>`;
   }).join("");
   $("funnelNote").textContent = s.clicks
-    ? `${s.clicks} 次点击 / ${s.uniqueClickers} 位独立访客`
-    : "点任意「追踪链接」或「模拟访客点击」即可产生真实点击事件";
+    ? `${s.clicks} 次点击 / ${s.uniqueClickers} 位独立访客 · 回应 ${s.replied} 人（想聊 ${s.interested}）`
+    : "点任意「追踪链接」或「模拟访客点击」产生点击 → 在名片页点「回应」才算联系上";
 
   renderTable();
   $("snapInfo").textContent = `快照 ${SNAPSHOT.length} 篇 · ${new Set(SNAPSHOT.flatMap(p => p.authors.map(normName))).size} 位作者 · 抓取于 ${BUILD_DATE}`;
@@ -616,20 +809,38 @@ function renderTable() {
   const clickMap = new Map();
   for (const c of state.clicks) clickMap.set(c.hash, (clickMap.get(c.hash) || 0) + 1);
   const msgMap = new Map(state.msgs.map(m => [m.hash, m]));
+  const repMap = new Map();
+  for (const r of state.replies) repMap.set(r.hash, r); // 后写覆盖先写 = 天然取最新一条
+  // 优先级清单：想聊 > 改天 > 点过没回应 > 只投递 >> 已拒绝
+  const pri = p => {
+    const r = repMap.get(p.hash);
+    if (r) return r.kind === "yes" ? 30 : r.kind === "later" ? 20 : 0;
+    return (clickMap.get(p.hash) || 0) ? 10 : 5;
+  };
+  rows.sort((a, b) => pri(b) - pri(a) || (clickMap.get(b.hash) || 0) - (clickMap.get(a.hash) || 0));
 
   $("tbl").innerHTML = rows.map(p => {
     const m = msgMap.get(p.hash);
     const clicks = clickMap.get(p.hash) || 0;
+    const r = repMap.get(p.hash);
     const initial = (p.name.match(/[A-Za-z\u4e00-\u9fa5]/) || ["?"])[0].toUpperCase();
     const status = (m && m.sent ? `<span class="chip sent">已投递</span>` : `<span class="chip draft">草稿</span>`)
-      + (clicks ? ` <span class="chip click">点击 ${clicks}</span>` : "");
+      + (clicks ? ` <span class="chip click">点击 ${clicks}</span>` : "")
+      + (r ? ` <span class="chip ${REPLY_KIND[r.kind].chip}">${REPLY_KIND[r.kind].short}</span>` : "")
+      + (m && m.fu ? ` <span class="chip fu">已跟进</span>` : "");
+    const closed = r && r.kind === "no";
+    const followBtn = closed
+      ? `<div style="margin-top:6px"><span class="hint" style="font-size:11px">已拒绝 · 不再触达</span></div>`
+      : (clicks || r)
+        ? `<div style="margin-top:6px"><button class="btn sm" data-follow="${p.hash}">${r && r.kind === "yes" ? "约时间 →" : "跟进 →"}</button></div>`
+        : "";
     const draft = m ? `主题：${m.subject}\n\n${m.body}` : "";
     return `<tr>
       <td><div class="who"><div class="ava" style="background:${avatarColor(p.name)}">${esc(initial)}</div>
         <div>${esc(p.name)}<div class="m" style="font-size:11px;color:var(--muted)">${esc(p.published || "")}</div></div></div></td>
       <td class="paper"><div class="t">${esc(p.paper)}</div>
         <div class="m"><span class="tag">${esc(p.cat || "arXiv")}</span><span>${esc(p.source)}</span></div></td>
-      <td>${status}</td>
+      <td>${status}${followBtn}</td>
       <td class="linkcell"><a href="#/c/${p.hash}" target="_blank" rel="noopener">#/c/${p.hash}</a></td>
       <td><details><summary>查看</summary>
         <pre>${esc(draft)}</pre>
@@ -639,8 +850,44 @@ function renderTable() {
   }).join("");
 }
 
-/* ---------- 名片页（接收方视角 + 点击埋点） ---------- */
-function showCard(hash) {
+/* ---------- 名片页（接收方视角 + 点击埋点 + 回应入口） ---------- */
+function replyBlock(hash) {
+  const r = latestReply(hash);
+  if (!r) {
+    return `<div class="replybox">
+      <h4>回一句？</h4>
+      <div class="rdesc">你的回应会直接进对方的跟进队列：选「想聊」会收到约时间的消息；选「不需要」之后不会再有任何来信。</div>
+      <div class="rbtns">
+        <button class="rb yes" data-reply="yes" data-hash="${hash}">想聊，约 15 分钟</button>
+        <button class="rb" data-reply="later" data-hash="${hash}">先不了，改天</button>
+        <button class="rb no" data-reply="no" data-hash="${hash}">不需要，别再来信</button>
+      </div>
+      <textarea class="rnote" id="replyNote" rows="2" placeholder="想补充一句？（可选，对方跟进时会看到）"></textarea>
+    </div>`;
+  }
+  const k = REPLY_KIND[r.kind];
+  return `<div class="replybox">
+    <div class="rstate ${r.kind}">
+      <div class="dot"></div>
+      <div class="txt"><b>已回应：${k.label}</b>
+        ${esc(r.ts)} 已记入对方的跟进队列。
+        ${r.note ? `<div class="note">留言：${esc(r.note)}</div>` : ""}
+        ${r.kind === "no" ? `<div class="note">不会再收到任何消息。</div>` : ""}
+      </div>
+    </div>
+    <div class="rchange"><button class="btn sm ghost" data-reopen="${hash}">改主意</button></div>
+  </div>`;
+}
+
+function undoReply(hash) {
+  // 追加式存储的好处：删掉最后一条就精确回到上一次选择
+  for (let i = state.replies.length - 1; i >= 0; i--) {
+    if (state.replies[i].hash === hash) { state.replies.splice(i, 1); saveState(); return true; }
+  }
+  return false;
+}
+
+function showCard(hash, countClick = true) {
   $("dash").style.display = "none";
   $("cardView").classList.add("on");
   document.title = "名片 · NeurIPS 2026";
@@ -657,9 +904,11 @@ function showCard(hash) {
     return;
   }
 
-  // 埋点：每次打开算一次点击
-  state.clicks.push({ hash, ts: nowStr(), ua: navigator.userAgent.slice(0, 160) });
-  saveState();
+  // 埋点：每次真正打开算一次点击；回应后重渲染不重复计数
+  if (countClick) {
+    state.clicks.push({ hash, ts: nowStr(), ua: navigator.userAgent.slice(0, 160) });
+    saveState();
+  }
 
   const lines = state.cfg.profile.split("\n").map(l => l.trim()).filter(Boolean);
   const named = lines.map(l => {
@@ -684,8 +933,9 @@ function showCard(hash) {
     <div class="role">${esc(roleText.trim())}</div>
     ${body}
     <div class="quotebox"><b>这条链接来自</b>《${esc(paper)}》—— 我看到您在 arXiv 上的这篇工作，想当面聊 15 分钟。</div>
+    ${replyBlock(hash)}
     <div class="cardfoot">
-      <span class="tracked">✓ 本次访问已记入触达漏斗</span>
+      <span class="tracked">${countClick ? "✓ 本次访问已记入触达漏斗" : "✓ 回应已记录"}</span>
       <a class="cardback" href="#">返回看板 →</a>
     </div>`;
 }
@@ -721,6 +971,7 @@ function initUI() {
     $("cfgProfile").value = state.cfg.profile;
     $("cfgSubject").value = state.cfg.subject;
     $("cfgBody").value = state.cfg.body;
+    $("cfgFollowYes").value = state.cfg.followupYes || DEFAULT_CFG.followupYes;
     $("cfgSaved").textContent = "";
     $("drawer").classList.add("on");
     $("scrim").classList.add("on");
@@ -732,15 +983,28 @@ function initUI() {
   $("btnProfile").onclick = openDrawer;
   $("btnCloseDrawer").onclick = closeDrawer;
   $("scrim").onclick = closeDrawer;
+  $("fuClose").onclick = closeFollow;
+  $("fuScrim").onclick = closeFollow;
+  $("fuCopy").onclick = () => copyText($("fuText").value);
+  $("fuMark").onclick = () => {
+    const h = $("fuMark").dataset.hash;
+    const m = state.msgs.find(x => x.hash === h);
+    if (m) { m.fu = nowStr(); saveState(); render(); }
+    closeFollow();
+    toast("已标记跟进 · 24 小时内不要再催");
+  };
   $("btnSaveCfg").onclick = saveCfg;
   $("btnDefaultCfg").onclick = () => {
     $("cfgProfile").value = DEFAULT_CFG.profile;
     $("cfgSubject").value = DEFAULT_CFG.subject;
     $("cfgBody").value = DEFAULT_CFG.body;
+    $("cfgFollowYes").value = DEFAULT_CFG.followupYes;
   };
 
   // 表格内「复制草稿」用事件委托
   $("tbl").addEventListener("click", ev => {
+    const fu = ev.target.closest("[data-follow]");
+    if (fu) return openFollow(fu.dataset.follow);
     const btn = ev.target.closest("[data-copy]");
     if (!btn) return;
     const m = state.msgs.find(x => x.hash === btn.dataset.copy);
@@ -753,6 +1017,37 @@ function initUI() {
   });
 
   window.addEventListener("hashchange", route);
+
+  // 名片页的回应按钮是动态渲染的，用事件委托接
+  $("cardBody").addEventListener("click", ev => {
+    const rep = ev.target.closest("[data-reply]");
+    if (rep) {
+      const h = rep.dataset.hash, kind = rep.dataset.reply;
+      const note = $("replyNote") ? $("replyNote").value : "";
+      addReply(h, kind, note);
+      showCard(h, false);
+      const p = state.people.find(x => x.hash === h);
+      toast(kind === "no"
+        ? `已记录：不再联系${p ? " " + p.name : ""}`
+        : `已记录回应 · ${REPLY_KIND[kind].label}`);
+      return;
+    }
+    const reo = ev.target.closest("[data-reopen]");
+    if (reo) {
+      undoReply(reo.dataset.reopen);
+      showCard(reo.dataset.reopen, false);
+      toast("已撤销上一次回应，可以重选");
+    }
+  });
+
+  // 跨标签页同步：名片里点回应，看板那个标签页立即更新
+  window.addEventListener("storage", e => {
+    if (e.key !== LS_KEY) return;
+    state = loadState();
+    const m = location.hash.match(/^#\/c\/([0-9a-f]{10})$/);
+    if (m) return showCard(m[1], false);
+    render();
+  });
 
   if (!store.ok) {
     $("modeBadge").textContent = "单文件 · 本机存储不可用";
