@@ -1,0 +1,778 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NeurIPS 2026 参会人触达 · 单文件版</title>
+<style>
+:root{
+  --bg:#f5f6f8; --panel:#ffffff; --line:#e5e7ec; --line-soft:#eef0f4;
+  --ink:#14161b; --ink-2:#3f444d; --muted:#6b7280;
+  --accent:#3b5bdb; --accent-soft:#eef1fd; --accent-ink:#2b46b8;
+  --ok:#0f7a45; --ok-soft:#e7f6ed; --warn:#9a6700; --warn-soft:#fff5e0;
+  --danger:#b42318;
+  --radius:14px; --shadow:0 1px 2px rgba(16,24,40,.04), 0 8px 24px -12px rgba(16,24,40,.14);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:system-ui,-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+  background:var(--bg); color:var(--ink); font-size:14px; line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3{margin:0;font-weight:650;letter-spacing:-.01em}
+p{margin:0}
+small{color:var(--muted)}
+button{font-family:inherit}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{max-width:1180px;margin:0 auto;padding:22px 24px 64px}
+
+/* ---------- header ---------- */
+.top{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:18px}
+.brand{display:flex;gap:13px;align-items:flex-start}
+.logo{
+  width:38px;height:38px;border-radius:11px;flex:0 0 auto;
+  background:linear-gradient(145deg,#4a6bef,#2f47b0); color:#fff;
+  display:grid;place-items:center;font-weight:700;font-size:17px;
+  box-shadow:0 4px 12px -4px rgba(59,91,219,.6);
+}
+.brand h1{font-size:18px}
+.brand p{font-size:12.5px;color:var(--muted);margin-top:1px}
+.actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.badge{
+  font-size:11.5px;padding:5px 10px;border-radius:999px;background:var(--ok-soft);
+  color:var(--ok);border:1px solid #c9ecd8;white-space:nowrap;
+}
+.badge.local{background:var(--warn-soft);border-color:#f2e0b8;color:var(--warn)}
+
+/* ---------- buttons ---------- */
+.btn{
+  padding:8px 14px;font-size:13px;border-radius:9px;border:1px solid var(--line);
+  background:#fff;color:var(--ink-2);cursor:pointer;transition:.15s;white-space:nowrap;
+}
+.btn:hover{background:#f7f8fa;border-color:#d8dbe2}
+.btn:active{transform:translateY(.5px)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:560}
+.btn.primary:hover{background:var(--accent-ink);border-color:var(--accent-ink)}
+.btn.ghost{background:transparent}
+.btn.danger{color:var(--danger)}
+.btn.sm{padding:5px 10px;font-size:12px;border-radius:7px}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+
+/* ---------- cards ---------- */
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+.sec{margin-bottom:16px}
+.sec-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:9px;padding:0 2px}
+.sec-head h2{font-size:13px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:600}
+
+/* ---------- controls ---------- */
+.controls{padding:14px 16px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.field{display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--muted)}
+select,input[type=number],input[type=text]{
+  padding:7px 10px;font-size:13px;border:1px solid var(--line);border-radius:8px;
+  background:#fff;color:var(--ink);font-family:inherit;
+}
+select:focus,input:focus,textarea:focus{outline:2px solid var(--accent-soft);border-color:var(--accent)}
+input[type=number]{width:66px}
+.spacer{flex:1}
+.hint{font-size:12px;color:var(--muted)}
+
+/* ---------- kpi ---------- */
+.kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+.kpi{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.kpi .k{font-size:11.5px;color:var(--muted);margin-bottom:2px}
+.kpi .v{font-size:22px;font-weight:660;letter-spacing:-.02em;line-height:1.15}
+.kpi .v small{font-size:12px;font-weight:500;color:var(--muted);margin-left:3px}
+.kpi.hl{background:var(--accent-soft);border-color:#d6ddfa}
+.kpi.hl .v{color:var(--accent-ink)}
+
+/* ---------- funnel ---------- */
+.funnel{padding:6px 18px 16px}
+.frow{display:grid;grid-template-columns:74px 1fr 118px;gap:14px;align-items:center;padding:7px 0;border-bottom:1px dashed var(--line-soft)}
+.frow:last-child{border-bottom:0}
+.fname{font-size:12.5px;color:var(--ink-2)}
+.ftrack{height:9px;background:#eef0f4;border-radius:99px;overflow:hidden}
+.fbar{height:100%;border-radius:99px;background:linear-gradient(90deg,#5c7bf0,#3b5bdb);transition:width .5s cubic-bezier(.2,.7,.3,1)}
+.fbar.g2{background:linear-gradient(90deg,#7a93f2,#5570e0)}
+.fbar.g3{background:linear-gradient(90deg,#94a9f5,#7189e8)}
+.fbar.g4{background:linear-gradient(90deg,#aebdf8,#8fa3ee)}
+.fbar.g5{background:linear-gradient(90deg,#22a06b,#0f7a45)}
+.fmeta{text-align:right;font-size:12.5px;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.fmeta b{font-size:14px;font-weight:640}
+.fmeta i{font-style:normal;color:var(--muted);font-size:11.5px;margin-left:6px}
+
+/* ---------- table ---------- */
+.tbl-wrap{overflow:auto;border-radius:var(--radius)}
+table{width:100%;border-collapse:collapse}
+thead th{
+  position:sticky;top:0;z-index:2;background:#fafbfc;text-align:left;
+  font-size:11.5px;font-weight:600;color:var(--muted);letter-spacing:.03em;
+  padding:9px 12px;border-bottom:1px solid var(--line);white-space:nowrap;
+}
+tbody td{padding:11px 12px;border-bottom:1px solid var(--line-soft);vertical-align:top;font-size:13px}
+tbody tr:hover{background:#fbfcfd}
+tbody tr:last-child td{border-bottom:0}
+.who{display:flex;gap:9px;align-items:center;min-width:132px}
+.ava{
+  width:26px;height:26px;border-radius:8px;flex:0 0 auto;display:grid;place-items:center;
+  font-size:12px;font-weight:640;color:#fff;
+}
+.paper{max-width:400px}
+.paper .t{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.45}
+.paper .m{margin-top:3px;font-size:11.5px;color:var(--muted);display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.tag{font-size:10.5px;padding:1px 6px;border-radius:5px;background:#f0f2f6;color:var(--ink-2);border:1px solid var(--line-soft);white-space:nowrap}
+.chip{font-size:11.5px;padding:2px 8px;border-radius:999px;white-space:nowrap;display:inline-block}
+.chip.draft{background:#f2f4f7;color:var(--ink-2)}
+.chip.sent{background:var(--accent-soft);color:var(--accent-ink)}
+.chip.click{background:var(--ok-soft);color:var(--ok)}
+.linkcell{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:11.5px;white-space:nowrap}
+details summary{cursor:pointer;font-size:12.5px;color:var(--accent);list-style:none;user-select:none}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:"▸ ";font-size:10px}
+details[open] summary::before{content:"▾ "}
+details pre{
+  white-space:pre-wrap;word-break:break-word;background:#fafbfc;border:1px solid var(--line-soft);
+  padding:10px 12px;border-radius:9px;font-size:11.5px;line-height:1.6;margin:8px 0 6px;
+  font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;max-width:440px;
+}
+.empty{padding:52px 20px;text-align:center;color:var(--muted)}
+.empty b{display:block;color:var(--ink);font-size:15px;margin-bottom:4px}
+
+/* ---------- toast ---------- */
+#toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,20px);opacity:0;pointer-events:none;
+  background:#191c22;color:#fff;padding:10px 16px;border-radius:10px;font-size:13px;transition:.25s;z-index:99;
+  box-shadow:0 10px 30px -8px rgba(0,0,0,.4);max-width:80vw}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+#toast.err{background:#8f1d14}
+
+/* ---------- drawer ---------- */
+.scrim{position:fixed;inset:0;background:rgba(15,20,35,.32);opacity:0;pointer-events:none;transition:.2s;z-index:40}
+.scrim.on{opacity:1;pointer-events:auto}
+.drawer{
+  position:fixed;top:0;right:0;height:100%;width:440px;max-width:92vw;background:#fff;z-index:50;
+  border-left:1px solid var(--line);transform:translateX(102%);transition:transform .26s cubic-bezier(.3,.8,.3,1);
+  display:flex;flex-direction:column;box-shadow:-12px 0 32px -20px rgba(16,24,40,.3);
+}
+.drawer.on{transform:none}
+.drawer-head{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;border-bottom:1px solid var(--line)}
+.drawer-head h3{font-size:14px}
+.drawer-body{padding:16px 18px 28px;overflow:auto;display:flex;flex-direction:column;gap:14px}
+.drawer-body label{display:block;font-size:12.5px;color:var(--ink-2);font-weight:560}
+textarea{
+  width:100%;margin-top:6px;padding:10px 12px;border:1px solid var(--line);border-radius:9px;
+  font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;
+  resize:vertical;color:var(--ink);
+}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.x{border:0;background:transparent;font-size:20px;line-height:1;color:var(--muted);cursor:pointer;padding:2px 6px;border-radius:6px}
+.x:hover{background:#f2f4f7;color:var(--ink)}
+
+/* ---------- card view ---------- */
+#cardView{display:none;min-height:100vh;padding:40px 20px 60px;background:
+  radial-gradient(1200px 420px at 50% -160px,#e9edfc 0%,rgba(233,237,252,0) 70%),var(--bg)}
+#cardView.on{display:block}
+.cardbox{max-width:600px;margin:0 auto;background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden;box-shadow:0 24px 60px -30px rgba(16,24,40,.35)}
+.cardtop{height:92px;background:linear-gradient(120deg,#4a6bef,#2f47b0);position:relative}
+.cardtop::after{content:"";position:absolute;inset:0;background:
+  radial-gradient(340px 130px at 85% 10%,rgba(255,255,255,.35),transparent 70%)}
+.cardbody{padding:0 30px 30px}
+.avatar{
+  width:62px;height:62px;border-radius:18px;background:#fff;border:1px solid var(--line);
+  margin-top:-31px;position:relative;display:grid;place-items:center;font-size:24px;
+  font-weight:700;color:var(--accent-ink);box-shadow:0 6px 16px -8px rgba(16,24,40,.3);
+}
+.cardbody h2{font-size:21px;margin-top:14px}
+.cardbody .role{color:var(--muted);font-size:13px;margin-top:2px}
+.plist{margin-top:20px;display:flex;flex-direction:column;gap:0;border-top:1px solid var(--line-soft)}
+.pitem{padding:12px 0;border-bottom:1px solid var(--line-soft);display:grid;grid-template-columns:94px 1fr;gap:12px}
+.pitem .k{font-size:12px;color:var(--muted)}
+.pitem .v{font-size:13.5px;color:var(--ink-2)}
+.pfree{white-space:pre-wrap;padding:12px 0;font-size:13.5px;color:var(--ink-2)}
+.quotebox{margin-top:20px;background:#fafbfc;border:1px solid var(--line-soft);border-left:3px solid var(--accent);
+  border-radius:8px;padding:12px 14px;font-size:12.5px;color:var(--ink-2)}
+.quotebox b{display:block;font-size:11px;color:var(--muted);font-weight:600;letter-spacing:.04em;margin-bottom:4px}
+.cardfoot{margin-top:22px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.tracked{font-size:11.5px;color:var(--ok);background:var(--ok-soft);padding:5px 10px;border-radius:999px;border:1px solid #c9ecd8}
+.cardback{font-size:12.5px}
+
+@media (max-width:980px){
+  .kpis{grid-template-columns:repeat(3,1fr)}
+  .paper{max-width:none}
+}
+@media (max-width:640px){
+  .wrap{padding:16px 14px 48px}
+  .kpis{grid-template-columns:repeat(2,1fr)}
+  .frow{grid-template-columns:64px 1fr 90px;gap:9px}
+  .cardbody{padding:0 20px 24px}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap" id="dash">
+  <header class="top">
+    <div class="brand">
+      <div class="logo">R</div>
+      <div>
+        <h1>NeurIPS 2026 参会人触达</h1>
+        <p>arXiv 真实快照 → 姓名归一去重 → 个性化渲染 → dry-run 投递 → 唯一链接点击追踪 → 漏斗看板</p>
+      </div>
+    </div>
+    <div class="actions">
+      <span class="badge" id="modeBadge">单文件 · 双击即开</span>
+      <button class="btn ghost" id="btnProfile">我的名片 / 模板</button>
+      <button class="btn ghost" id="btnExport">导出 CSV</button>
+      <button class="btn ghost danger" id="btnReset">重置数据</button>
+    </div>
+  </header>
+
+  <section class="card controls sec">
+    <label class="field">数据源
+      <select id="selQuery"></select>
+    </label>
+    <label class="field">新增上限
+      <input id="inpLimit" type="number" value="20" min="1" max="200">
+    </label>
+    <button class="btn primary" id="btnLoad">载入人群</button>
+    <button class="btn" id="btnSend">模拟投递 (dry-run)</button>
+    <button class="btn" id="btnVisitor">模拟访客点击</button>
+    <span class="spacer"></span>
+    <span class="hint" id="snapInfo"></span>
+  </section>
+
+  <section class="sec">
+    <div class="kpis" id="kpis"></div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-head"><h2>转化漏斗</h2><span class="hint" id="funnelNote"></span></div>
+    <div class="card funnel" id="funnel"></div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-head">
+      <h2>触达名单</h2>
+      <div class="row">
+        <input type="text" id="inpFilter" placeholder="按姓名 / 论文筛选" style="width:200px">
+        <span class="hint" id="tblCount"></span>
+      </div>
+    </div>
+    <div class="card tbl-wrap">
+      <table>
+        <thead><tr>
+          <th style="width:150px">姓名</th>
+          <th>论文 / 来源</th>
+          <th style="width:104px">状态</th>
+          <th style="width:126px">追踪链接</th>
+          <th style="width:110px">草稿</th>
+        </tr></thead>
+        <tbody id="tbl"></tbody>
+      </table>
+    </div>
+    <p class="hint" style="margin-top:10px">
+      追踪机制：每位联系人拿到一条 <code>#/c/&lt;hash&gt;</code> 链接，对方打开即写入一次点击事件。
+      单文件版把事件落在本机浏览器（localStorage），所以同机演示完全跑通；跨人真实追踪需服务端版 <code>reach.py</code>。
+    </p>
+  </section>
+</div>
+
+<div id="cardView">
+  <div class="cardbox">
+    <div class="cardtop"></div>
+    <div class="cardbody" id="cardBody"></div>
+  </div>
+</div>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer">
+  <div class="drawer-head">
+    <h3>我的名片 / 消息模板</h3>
+    <button class="x" id="btnCloseDrawer" aria-label="关闭">×</button>
+  </div>
+  <div class="drawer-body">
+    <label>名片正文（出现在名片页与邮件里）
+      <textarea id="cfgProfile" rows="5"></textarea>
+    </label>
+    <label>邮件主题模板
+      <textarea id="cfgSubject" rows="2"></textarea>
+    </label>
+    <label>邮件正文模板
+      <textarea id="cfgBody" rows="9"></textarea>
+    </label>
+    <p class="hint">可用占位符：<code>{name}</code> <code>{paper}</code> <code>{paper60}</code> <code>{paper80}</code> <code>{link}</code> <code>{profile}</code></p>
+    <div class="row">
+      <button class="btn primary" id="btnSaveCfg">保存并重算草稿</button>
+      <button class="btn" id="btnDefaultCfg">恢复默认</button>
+    </div>
+    <p class="hint" id="cfgSaved"></p>
+  </div>
+</aside>
+
+<div id="toast"></div>
+
+<script>
+"use strict";
+
+/* ============================================================
+ * 数据快照：构建时从 arXiv Atom API 抓取的真实论文（2026-11-14）
+ * 结构: {id, title, authors[], n_authors, published, cat, query}
+ * ============================================================ */
+const SNAPSHOT = [{"id":"2611.17324v1","title":"K2V: Generative Keyframing For Physically Plausible Video Generation","authors":["Felix O'Mahony","Daniel Olmeda Reino","Roberto Cipolla","Ayush Tewari"],"published":"2026-11-12","cat":"cs.CV","query":"扩散模型 · \"diffusion model\""},{"id":"2611.17194v1","title":"eDMD: Endpoint Distribution Matching for Few-Step Diffusion Distillation","authors":["Tong Zhao","Xianfang Zeng","Yucheng Han","Ruoyu Wang","Mingkun Lei","Gang Yu"],"published":"2026-11-12","cat":"cs.CV","query":"扩散模型 · \"diffusion model\""},{"id":"2611.16306v1","title":"Overcoming Spurious Correlations in Conditional Diffusion Models via Doubly Robust Target Correction","authors":["Eiichi Sakurai","Kenji Yamanishi"],"published":"2026-11-12","cat":"cs.LG","query":"扩散模型 · \"diffusion model\""},{"id":"2611.16224v1","title":"Disentangled Embedding Optimization for Diffusion-Based Dataset Distillation","authors":["Hongcheng Li","Yucan Zhou","Yibin Wang","Xiaoyan Gu","Bo Li","Weiping Wang"],"published":"2026-11-12","cat":"cs.CV","query":"扩散模型 · \"diffusion model\""},{"id":"2611.16129v1","title":"Novel Esscher concepts for informational risks and valuation in market models under random horizon","authors":["Tahir Choulli","Ella Elazkany"],"published":"2026-11-12","cat":"q-fin.MF","query":"扩散模型 · \"diffusion model\""},{"id":"2611.15905v1","title":"An analytic diffusion model for viewing-angle effects in explosive transients","authors":["Daniella van der Boom","Doron Kushnir"],"published":"2026-11-11","cat":"astro-ph.HE","query":"扩散模型 · \"diffusion model\""},{"id":"2611.15760v1","title":"Image Deblending with Diffusion Models","authors":["Dan Botchan","Ohad Fried","Yacov Hel-Or"],"published":"2026-11-11","cat":"cs.CV","query":"扩散模型 · \"diffusion model\""},{"id":"2611.15571v1","title":"Single Spin Hall Conversion in the Hall Response of Magnetic-Insulator/Heavy-Metal Bilayers Identified by Odd Spin-Hall-Angle Dependence","authors":["Akashdeep Akashdeep","Ewiese Mohammad Ababneh","Botros Gerges Mikhail Fenhas","Duc Minh Tran","Mathias Kläui","Steven S. -L. Zhang"],"published":"2026-11-11","cat":"cond-mat.mes-hall","query":"扩散模型 · \"diffusion model\""},{"id":"2611.15420v1","title":"Learning Motion-Appearance Coupling Priors for Solving Video Inverse Problems","authors":["Anselm Krainovic","Reinhard Heckel"],"published":"2026-11-11","cat":"cs.CV","query":"扩散模型 · \"diffusion model\""},{"id":"2611.15287v1","title":"Track4D: Representing Dense 3D Tracking for Video Diffusion Models","authors":["Yushi Lan","Zeren Jiang","Kelvin Li","Xingang Pan","Chuanxia Zheng","Andrea Vedaldi"],"published":"2026-11-11","cat":"cs.CV","query":"扩散模型 · \"diffusion model\""},{"id":"2611.15246v1","title":"Dual Representation Enhanced Diffusion Policy for Flexible Job Shop Scheduling","authors":["Yunyi Zhao","Wei Zhang","Cheng Xiang","Vadakkepat Prahlad","Zuming Liu"],"published":"2026-11-11","cat":"cs.LG","query":"扩散模型 · \"diffusion model\""},{"id":"2611.15238v1","title":"Towards Robust Vision-Language Reasoning: A Multi-Stage Optimization Pipeline with Masked Diffusion Model","authors":["Shunming Liu","Pei Huang","Yajing Sun","Huaxiao Liu"],"published":"2026-11-11","cat":"cs.AI","query":"扩散模型 · \"diffusion model\""},{"id":"2611.15131v1","title":"Duo: A Reciprocal World Model for Full-Duplex Interaction","authors":["Hengyuan Cao","Biao Gong","Guoshan Lu","Qiyuan Zhang","Lin Liu","Yiding Tian"],"published":"2026-11-11","cat":"cs.CV","query":"扩散模型 · \"diffusion model\""},{"id":"2611.15101v1","title":"CFGComposer: Compositional Audio-Text-to-Motion Generation via Copula Score Correction","authors":["Pengyang Shi","Jinlu Zhang","Chunze Lin","Yizhou Wang","Li Yi"],"published":"2026-11-11","cat":"cs.SD","query":"扩散模型 · \"diffusion model\""},{"id":"2611.15093v1","title":"Decide Before You Move: Diffusion-Generated Search Reference for Zero-Shot Open-Vocabulary Object Navigation in Semi-Static Environments","authors":["Yuxuan Feng","Fujing Xie","Sören Schwertfeger","Hermann Blum"],"published":"2026-11-11","cat":"cs.RO","query":"扩散模型 · \"diffusion model\""},{"id":"2611.14656v1","title":"Thompson Sampling using Prior-fitted Diffusion Transformers","authors":["Sihwa Park","Jingsen Zhu","Vinamr Jain","Sheng-Yen Chou","Alexander Terenin"],"published":"2026-11-10","cat":"cs.LG","query":"扩散模型 · \"diffusion model\""},{"id":"2611.14468v1","title":"Bayesian inverse problems and epidemic-threshold uncertainty for a heterogeneous SIS reaction-diffusion model","authors":["Duc-Lam Duong"],"published":"2026-11-10","cat":"math.AP","query":"扩散模型 · \"diffusion model\""},{"id":"2611.14387v1","title":"Blurring the Block Boundaries: Overlapping Block Denoising for Efficient Diffusion Language Models","authors":["Amir Mann","Jonathan Fhima","Shaked Brody","Or Avitan","Asif Zamir","Shahar Tsiper"],"published":"2026-11-10","cat":"cs.CL","query":"扩散模型 · \"diffusion model\""},{"id":"2611.17323v1","title":"AgentSSL: Can MLE Agents Leverage Unlabeled Data?","authors":["Ethan Lin","Akanksha Sarkar","Ziang Liu","Kristin Branson","Jennifer J. Sun"],"published":"2026-11-12","cat":"cs.AI","query":"LLM Agent · cat:cs.AI"},{"id":"2611.17316v1","title":"CoReMem: Cost-Internalizing Memory for Successive Coding Tasks with Prospective Valuation","authors":["Peiwen Li","Harshit Verma","Sophia Zhou","Haiwen Wang","Ngoc Bui","Heng Chang"],"published":"2026-11-12","cat":"cs.AI","query":"LLM Agent · cat:cs.AI"},{"id":"2611.17294v1","title":"Metal Sandbox: Isolated Execution and Command Scheduling for GPU Coding Agents on Apple Silicon","authors":["Haozhe Wang","Lina Chen","Fanqi Wan","Qi Han","Yinmin Zhang","Zheng Ge"],"published":"2026-11-12","cat":"cs.LG","query":"LLM Agent · cat:cs.AI"},{"id":"2611.17267v1","title":"LiveGeo: Benchmarking Geographic Agents in Continuously Evolving Worlds","authors":["Pengcheng Zhou","Xuanyu Liu","Yanchen Yin","Tianjie Ju","Bobo Li","Shengqiong Wu"],"published":"2026-11-12","cat":"cs.AI","query":"LLM Agent · cat:cs.AI"},{"id":"2611.17220v1","title":"Scalable Conversational Assessment: Chat-Based Exams with a Two-Agent LLM Pipeline","authors":["Geoffrey Challen","Craig Zilles"],"published":"2026-11-12","cat":"cs.CY","query":"LLM Agent · cat:cs.AI"},{"id":"2611.17186v1","title":"Cortex-FL: Agent-Mediated Collaboration for Federated Learning","authors":["Rui Sun","Jinfeng Peng","Zehua Cheng","Jiahao Sun","Zhipeng Wang"],"published":"2026-11-12","cat":"cs.AI","query":"LLM Agent · cat:cs.AI"},{"id":"2611.17167v1","title":"Actor, Judge, or Teacher? Understanding Decision Models in Long-Horizon Agents","authors":["Haochen Liu","Qianhao Zhu","Zixuan Wang","Dingming Li","Tongbo Chen","Peng Qiu"],"published":"2026-11-12","cat":"cs.AI","query":"LLM Agent · cat:cs.AI"},{"id":"2611.17115v1","title":"CapLite: Prompt-Injection Defense for Small Language Model Agents without Model-Written Security Artifacts","authors":["Zimo Xu","Wenzhuo Liu","Hideki Nakayama"],"published":"2026-11-12","cat":"cs.AI","query":"LLM Agent · cat:cs.AI"},{"id":"2611.17114v1","title":"Designing Institutions for Autonomous AI","authors":["Petter Törnberg"],"published":"2026-11-12","cat":"cs.SI","query":"LLM Agent · cat:cs.AI"},{"id":"2611.17068v1","title":"Discovering Effective Agent Memory Designs through Program Evolution","authors":["Xinheng Ding","Seyyed Saeid Cheshmi","Ziyang Zhang","Tairan Chen","Wenya Xie","Yu Hou"],"published":"2026-11-12","cat":"cs.CL","query":"LLM Agent · cat:cs.AI"},{"id":"2611.17052v1","title":"Auditing AI peer reviewers: a benchmark on real scientific papers","authors":["Íñigo Zubeldia","Boris Bolliet","Francisco Villaescusa-Navarro","Pablo Villanueva-Domingo","Miles Cranmer"],"published":"2026-11-12","cat":"cs.CL","query":"LLM Agent · cat:cs.AI"},{"id":"2611.17041v1","title":"From Delegation to Coordination: Learning Efficient Multi-Agent Deep Research","authors":["Yuyang Wu","Yang Liu","Zequn Xie","Junjie Wang","Dan Yang","Zehao Tan"],"published":"2026-11-12","cat":"cs.MA","query":"LLM Agent · cat:cs.AI"},{"id":"2611.17015v1","title":"AI for Biologists: The Knowledge Boundaries of Foundation Models in the Age of Agentic Systems","authors":["Tian Cai","Andrew Kleist","Jaimin Patel","Duccio Malinverni","Alexander K. Taylor","Malvika Sharan"],"published":"2026-11-12","cat":"q-bio.BM","query":"LLM Agent · cat:cs.AI"},{"id":"2611.17007v1","title":"Skill Adapter: Personalized Modification and Online Routing of General-Purpose Skills","authors":["Qijia Zhuang","Yanyi Gou","Wenbin Ma","Yuxiang Ren"],"published":"2026-11-12","cat":"cs.AI","query":"LLM Agent · cat:cs.AI"},{"id":"2611.16991v1","title":"AnalogLayoutWorld: An Open Benchmark for Agentic Analog Layout Design","authors":["NovaSilicon Team"],"published":"2026-11-12","cat":"cs.AI","query":"LLM Agent · cat:cs.AI"},{"id":"2611.16986v1","title":"Primer: An AI Framework for Instructor-Centered Educational Simulation Creation","authors":["Ethan Mollick","Lilach Mollick","Ben Przystanski","LJ Ciccarelli","Natalie Bach","Laura Zarrow"],"published":"2026-11-12","cat":"cs.AI","query":"LLM Agent · cat:cs.AI"},{"id":"2611.16981v1","title":"Compiling Known Rules into Compact Neural Agents: Weight-Space Programming on Unseen Games","authors":["Jens Lehmann"],"published":"2026-11-12","cat":"cs.AI","query":"LLM Agent · cat:cs.AI"},{"id":"2611.16961v1","title":"The Value of Thinking: Learning When to Reason in Hybrid Decision Models","authors":["Zhengxu Yu","Ke Xu","Meng Fang","Haitham Ammar","Weilin Luo","Jun Wang"],"published":"2026-11-12","cat":"cs.AI","query":"LLM Agent · cat:cs.AI"},{"id":"2611.16402v1","title":"Teach with Blinks: Breaking Linguistic Momentum in On-Policy Distillation for Fine-Grained Multimodal Perception","authors":["Tangzheng Lian","Hang Zhang","Guanyu Hu","Renjiu Hu","Zhensong Zhang","Jiankang Deng"],"published":"2026-11-12","cat":"cs.CV","query":"多模态大模型 · \"multimodal LLM\""},{"id":"2611.16345v1","title":"DRAMA: Dissecting Attention Redundancy for Accelerating Multimodal Diffusion Large Language Models","authors":["Yi-Hsin Hung","Fangfu Liu","Shao-Yuan Lo","Chu-Song Chen"],"published":"2026-11-12","cat":"cs.LG","query":"多模态大模型 · \"multimodal LLM\""},{"id":"2611.15941v1","title":"Lang-SVG: Hierarchical Image Vectorization with Language Priors","authors":["Xi Liu","Chaoyi Zhou","Run Wang","Jiaang Li","Feng Luo","Junxiang Huang"],"published":"2026-11-11","cat":"cs.CV","query":"多模态大模型 · \"multimodal LLM\""},{"id":"2611.15809v1","title":"Fine-Grained Generative Hallucination Detection and Correction for Aerial Image Captioning","authors":["Debolena Basak","Somsubhra De","Maunendra Sankar Desarkar"],"published":"2026-11-11","cat":"cs.CV","query":"多模态大模型 · \"multimodal LLM\""},{"id":"2611.15651v1","title":"Recover, Don't Just Continue: Learning from Feedback for Physical Failure Understanding and Correction","authors":["Miao Pan","Kaixiang Yao","Xiaohe Zhou","Xu Wang","Qinfeng Li","Wenqi Zhang"],"published":"2026-11-11","cat":"cs.RO","query":"多模态大模型 · \"multimodal LLM\""},{"id":"2611.15449v1","title":"Reading the Unreadable: Text-Aware Image Super-Resolution Needs Reasoning","authors":["Jaeseong Lee","Jinwoo Kim","Jinho Jeong","Seon Joo Kim"],"published":"2026-11-11","cat":"cs.CV","query":"多模态大模型 · \"multimodal LLM\""},{"id":"2611.15448v1","title":"Semantic Consistency of Vision Tokens: A Vision-Centric Perspective on Multimodal Large Language Models","authors":["Nikola Đukić","Tim Lebailly","Tinne Tuytelaars"],"published":"2026-11-11","cat":"cs.CV","query":"多模态大模型 · \"multimodal LLM\""},{"id":"2611.15325v1","title":"CaseScope: A Multi-Field Benchmark for Case-Level Pathology Diagnosis with Multimodal LLMs","authors":["Wenchuan Zhang","Chengyang Zhang","Fengling Li","Ting Yin","Chen Shu","Jie Chen"],"published":"2026-11-11","cat":"cs.CV","query":"多模态大模型 · \"multimodal LLM\""},{"id":"2611.15225v1","title":"Can MLLMs Reason over Surround-View Driving Videos? A Multi-View Autonomous Driving QA Benchmark","authors":["Shunming Liu","Jianyi Peng","Cheng Li","Lu Hou","Pei Huang","Yajing Sun"],"published":"2026-11-11","cat":"cs.AI","query":"多模态大模型 · \"multimodal LLM\""},{"id":"2611.15168v1","title":"MAST: Medoid-Anchored Subspace Steering for Visual Grounding in Multimodal LLMs","authors":["Zhitao Chen","Zhenxin Cai","Jingyuan Li","Jin Sha"],"published":"2026-11-11","cat":"cs.CV","query":"多模态大模型 · \"multimodal LLM\""},{"id":"2611.15069v1","title":"DiFiT: Distribution-Fidelity-guided Visual Token Pruning for Multimodal Large Language Models","authors":["Jingyuan Zhang","Nihao Niu","Xinyang Lv","Beibei Han","Xiaoyun Wang","Yanning Hou"],"published":"2026-11-11","cat":"cs.CV","query":"多模态大模型 · \"multimodal LLM\""},{"id":"2611.14122v1","title":"Hx2Dx: From Anamnesis to Diagnosis - A Multimodal Arena for Conversational Clinical Reasoning in LLMs","authors":["Federico Ravenda","Mirko Cesarini","Daniele Montagnani","Volodymyr Karpenko","Antonietta Mira","Andrea Raballo"],"published":"2026-11-10","cat":"cs.AI","query":"多模态大模型 · \"multimodal LLM\""},{"id":"2611.14118v1","title":"TAMEing the Open-World Personalization: Towards Open-Set Personalized MLLM Assistant","authors":["Rongpei Hong","Jian Lang","Ting Zhong","Fan Zhou"],"published":"2026-11-10","cat":"cs.CV","query":"多模态大模型 · \"multimodal LLM\""},{"id":"2611.14113v1","title":"Looking One Step Ahead: An Anticipation-guided Agent for Object State Readout in Videos","authors":["Yuanhe Tian","Yan Song"],"published":"2026-11-10","cat":"cs.CV","query":"多模态大模型 · \"multimodal LLM\""},{"id":"2611.17329v1","title":"Internalizing Investment Mandates: A Neurosymbolic RL Approach to Portfolio Allocation","authors":["Zeynep Yıldız","Satchit Chatterji","Ercan Atam","Erman Acar"],"published":"2026-11-12","cat":"cs.LG","query":"强化学习 · cat:cs.LG"},{"id":"2611.17287v1","title":"Negative-Only Policy Optimization for One-Sided Verifiable Rewards","authors":["Jiacheng Xu","Shuo He","Fuxiang Zhang","Chaojie Wang","Bo An"],"published":"2026-11-12","cat":"cs.LG","query":"强化学习 · cat:cs.LG"},{"id":"2611.17134v1","title":"Support-Constrained Offline Policy Improvement for Pediatric ECMO from Limited Clinical Data","authors":["Fateme Golivand Darvishvand","Saurabh Mathur","Nikhilesh Prabhakar","Michael A. Skinner","Ameet Soni","Neel Shah"],"published":"2026-11-12","cat":"cs.LG","query":"强化学习 · cat:cs.LG"},{"id":"2611.16913v1","title":"CADET: Construction of PCB Routing Instances with Executable Demonstrations","authors":["Hyungseok Song","Won-Seok Choi","Seohui Bae","Han-Seul Jeong","Junseok Park","Youngjoon Park"],"published":"2026-11-12","cat":"cs.AI","query":"强化学习 · cat:cs.LG"},{"id":"2611.16678v1","title":"Edge-Gradient Augmentation under Reinforcement Learning for Temporal Graph","authors":["Yongqing Zhou","Jiawei Chen","Wenjun Wang","Xinyu Wang","Wei Yu","Qiyao Peng"],"published":"2026-11-12","cat":"cs.LG","query":"强化学习 · cat:cs.LG"},{"id":"2611.16574v1","title":"HALight: Heterogeneous Multi-Agent Reinforcement Learning for Traffic Signal Control under Lane-Level Missing Observations","authors":["Chenkai Hu","Yingqian Zhang","Ming Xie","Yi Fang","Chengxiang Jin","Chao Li"],"published":"2026-11-12","cat":"cs.LG","query":"强化学习 · cat:cs.LG"},{"id":"2611.16409v1","title":"Experience-Handoff Reinforcement Learning for Recursive Self-Improvement","authors":["Doyoung Kim","Byeongguk Jeon","Kailin Zhang","Sherry Yang"],"published":"2026-11-12","cat":"cs.LG","query":"强化学习 · cat:cs.LG"},{"id":"2611.16369v1","title":"Bait: Mitigating Harmful Agentic Reinforcement Learning via Probing Reward Function","authors":["Tiansheng Huang","Ananth Balashankar","Virat Shejwalkar","Santosh Pande","Ling Liu"],"published":"2026-11-12","cat":"cs.LG","query":"强化学习 · cat:cs.LG"},{"id":"2611.16304v1","title":"StateAlign: Internalizing State-Aware Decision-Making for Reliable Multi-Turn Tool Agents via Reinforcement Learning","authors":["Zhexi Lu","Subhajit Chaudhury","Tejaswini Pedapati","Keerthiram Murugesan","Lei Yu"],"published":"2026-11-12","cat":"cs.LG","query":"强化学习 · cat:cs.LG"},{"id":"2611.16301v1","title":"LoCoJAX: Host-Local Coordination for Small-Model RL on TPUs","authors":["Loki Chen","Gregory B. Rehm","Yang Song","Hongye Xie","Ming Lei","Chongyang Bai"],"published":"2026-11-12","cat":"cs.LG","query":"强化学习 · cat:cs.LG"},{"id":"2611.16053v1","title":"Wayfinder: Adaptive Resource Routing from Agent Citations","authors":["Miguel Romero","George Karypis"],"published":"2026-11-11","cat":"cs.LG","query":"强化学习 · cat:cs.LG"},{"id":"2611.15945v1","title":"Reinforcement Learning for Inventory Control under Regime-Switching Demand: A Controlled Comparison of LSTM, MLP, and (s,S) Policies","authors":["Alex Haines","Nathanael L. Baisa"],"published":"2026-11-11","cat":"cs.LG","query":"强化学习 · cat:cs.LG"}];
+const BUILD_DATE = "2026-11-14";
+
+/* ---------- 存储：localStorage，不可用时退化为内存 ---------- */
+const store = (() => {
+  let ok = true;
+  try { localStorage.setItem("__probe", "1"); localStorage.removeItem("__probe"); }
+  catch (e) { ok = false; }
+  const mem = {};
+  return {
+    ok,
+    get(k) { try { return ok ? localStorage.getItem(k) : (k in mem ? mem[k] : null); } catch (e) { return mem[k] ?? null; } },
+    set(k, v) { try { ok ? localStorage.setItem(k, v) : (mem[k] = v); } catch (e) { mem[k] = v; } }
+  };
+})();
+const LS_KEY = "reach.single.v1";
+
+const DEFAULT_CFG = {
+  profile: [
+    "一句话定位：用自然语言驱动全栈开发的 vibecoding 实践者",
+    "代表项目：单文件触达系统 reach —— 1 个 HTML 跑通「抓取→归一→渲染→投递→追踪→漏斗」",
+    "现场想聊：agent 工作流、评测驱动开发、人机协作的边界"
+  ].join("\n"),
+  subject: "读了您的《{paper60}》—— NeurIPS 2026 现场聊 15 分钟？",
+  body: [
+    "Hi {name}，",
+    "",
+    "刚读到您在 arXiv 上的工作《{paper80}》，和我们正在做的事很相关。",
+    "",
+    "关于我：",
+    "{profile}",
+    "",
+    "我今年也会在 NeurIPS 2026 现场，方便的话看下我的名片：{link}",
+    "",
+    "（不希望再收到，回 STOP 即可）"
+  ].join("\n")
+};
+
+let state = loadState();
+
+function loadState() {
+  try {
+    const raw = store.get(LS_KEY);
+    if (raw) {
+      const s = JSON.parse(raw);
+      if (s && Array.isArray(s.people)) {
+        s.clicks = s.clicks || [];
+        s.cfg = Object.assign({}, DEFAULT_CFG, s.cfg || {});
+        return s;
+      }
+    }
+  } catch (e) { /* 损坏则重建 */ }
+  return { people: [], msgs: [], clicks: [], cfg: { ...DEFAULT_CFG } };
+}
+function saveState() {
+  try { store.set(LS_KEY, JSON.stringify(state)); } catch (e) { /* 容量满时忽略 */ }
+}
+
+/* ---------- 工具 ---------- */
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const nowStr = () => {
+  const d = new Date(), p = n => String(n).padStart(2, "0");
+  return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}:${p(d.getSeconds())}`;
+};
+const normName = n => String(n).replace(/\s+/g, " ").trim().toLowerCase();
+
+/* FNV-1a → 稳定短链 hash，与 Python 版口径一致（同人同论文永远是同一链接） */
+function fnv1a(str) {
+  let h = 0x811c9dc5;
+  for (let i = 0; i < str.length; i++) {
+    h ^= str.charCodeAt(i);
+    h = (h * 0x01000193) >>> 0;
+  }
+  return h.toString(16).padStart(8, "0");
+}
+function msgHash(name, paper) {
+  return (fnv1a("a|" + name + "|" + paper) + fnv1a("b|" + paper + "|" + name)).slice(0, 10);
+}
+function cardURL(h) {
+  return location.href.split("#")[0] + "#/c/" + h;
+}
+
+function fill(tpl, ctx) {
+  return String(tpl).replace(/\{(\w+)\}/g, (m, k) => (k in ctx ? ctx[k] : m));
+}
+
+function toast(msg, isErr) {
+  const t = $("toast");
+  t.textContent = msg;
+  t.className = "on" + (isErr ? " err" : "");
+  clearTimeout(toast._t);
+  toast._t = setTimeout(() => (t.className = isErr ? "err" : ""), 2600);
+}
+
+const avatarColor = name => {
+  const h = parseInt(fnv1a(name).slice(0, 6), 16) % 360;
+  return `linear-gradient(145deg,hsl(${h} 62% 58%),hsl(${(h + 24) % 360} 64% 46%))`;
+};
+
+/* ---------- 核心流程 ---------- */
+function makeMessage(person) {
+  const c = state.cfg;
+  const paper = person.paper;
+  const ctx = {
+    name: person.name,
+    paper: paper,
+    paper60: paper.length > 60 ? paper.slice(0, 60) + "…" : paper,
+    paper80: paper.length > 80 ? paper.slice(0, 80) + "…" : paper,
+    link: cardURL(person.hash),
+    profile: c.profile.split("\n").filter(Boolean).map(l => "  " + l.trim()).join("\n")
+  };
+  return {
+    hash: person.hash,
+    subject: fill(c.subject, ctx).replace(/\s+/g, " ").trim(),
+    body: fill(c.body, ctx),
+    sent: 0,
+    created: nowStr()
+  };
+}
+
+function loadPeople(queryLabel, limit) {
+  const pool = queryLabel === "__all__" ? SNAPSHOT : SNAPSHOT.filter(p => p.query === queryLabel);
+  const byNorm = new Map(state.people.map(p => [p.norm, p]));
+  const msgByHash = new Map(state.msgs.map(m => [m.hash, m]));
+  let added = 0, dup = 0, papers = 0;
+
+  outer:
+  for (const paper of pool) {
+    let usedPaper = false;
+    for (const author of paper.authors) {
+      const nn = normName(author);
+      if (byNorm.has(nn)) { dup++; continue; }
+      if (added >= limit) break outer;
+
+      const hash = msgHash(nn, paper.title);
+      const person = {
+        id: state.people.length + 1,
+        name: author, norm: nn, paper: paper.title, paperId: paper.id,
+        cat: paper.cat || "", published: paper.published || "",
+        source: paper.query, hash, created: nowStr()
+      };
+      state.people.push(person);
+      byNorm.set(nn, person);
+      usedPaper = true;
+
+      if (!msgByHash.has(hash)) {
+        const m = makeMessage(person);
+        state.msgs.push(m);
+        msgByHash.set(hash, m);
+      }
+      added++;
+    }
+    if (usedPaper) papers++;
+  }
+  saveState();
+  render();
+  toast(`载入 ${papers} 篇论文 · 新增 ${added} 人${dup ? " · 去重跳过 " + dup + " 人" : ""}`);
+}
+
+function sendAll() {
+  let n = 0;
+  for (const m of state.msgs) if (!m.sent) { m.sent = 1; n++; }
+  saveState(); render();
+  toast(n ? `dry-run 投递 ${n} 封（未真正发信：SMTP 凭据在真实版配置）` : "没有待投递的草稿");
+}
+
+function pickVisitor() {
+  const clicked = new Set(state.clicks.map(c => c.hash));
+  const candidates = state.msgs.filter(m => !clicked.has(m.hash));
+  const pool = candidates.length ? candidates : state.msgs;
+  if (!pool.length) return toast("先载入人群再模拟", true);
+  const m = pool[Math.floor(Math.random() * pool.length)];
+  window.open(cardURL(m.hash), "_blank");
+  toast("已在新标签打开一张名片，点击已记入漏斗");
+}
+
+function resetAll() {
+  if (!confirm("清空本机保存的名单、草稿与点击记录？此操作不可撤销。")) return;
+  state = { people: [], msgs: [], clicks: [], cfg: state.cfg };
+  saveState(); render(); toast("已重置");
+}
+
+function exportCSV() {
+  if (!state.people.length) return toast("没有可导出的数据", true);
+  const rows = [["姓名", "论文", "类目", "来源", "追踪链接", "状态", "点击次数"]];
+  for (const p of state.people) {
+    const m = state.msgs.find(x => x.hash === p.hash);
+    const c = state.clicks.filter(x => x.hash === p.hash).length;
+    rows.push([p.name, p.paper, p.cat, p.source, cardURL(p.hash),
+      m && m.sent ? "已投递(dry)" : "草稿", String(c)]);
+  }
+  const csv = "\ufeff" + rows.map(r => r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(",")).join("\r\n");
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
+  a.download = `reach-${new Date().toISOString().slice(0, 10)}.csv`;
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+  toast("已导出 CSV");
+}
+
+function saveCfg() {
+  state.cfg = {
+    profile: $("cfgProfile").value.trim() || DEFAULT_CFG.profile,
+    subject: $("cfgSubject").value.trim() || DEFAULT_CFG.subject,
+    body: $("cfgBody").value || DEFAULT_CFG.body
+  };
+  const byHash = new Map(state.msgs.map(m => [m.hash, m]));
+  state.msgs = state.people.map(p => {
+    const fresh = makeMessage(p);
+    const old = byHash.get(p.hash);
+    if (old) { fresh.sent = old.sent; fresh.created = old.created; }
+    return fresh;
+  });
+  saveState(); render();
+  $("cfgSaved").textContent = "已保存 · " + nowStr();
+  toast("模板已更新，草稿已重算");
+}
+
+/* ---------- 渲染 ---------- */
+function stats() {
+  const papers = new Set(state.people.map(p => p.paperId)).size;
+  const sent = state.msgs.filter(m => m.sent).length;
+  const clicks = state.clicks.length;
+  const uniqueClickers = new Set(state.clicks.map(c => c.hash)).size;
+  return {
+    papers,
+    people: state.people.length,
+    msgs: state.msgs.length,
+    sent,
+    clicks,
+    uniqueClickers,
+    ctr: sent ? Math.round((uniqueClickers / sent) * 1000) / 10 : 0
+  };
+}
+
+function render() {
+  const s = stats();
+
+  $("kpis").innerHTML = [
+    ["论文", s.papers, ""],
+    ["去重人群", s.people, ""],
+    ["消息草稿", s.msgs, ""],
+    ["已投递", s.sent, "dry-run"],
+    ["点击次数", s.clicks, ""],
+    ["点击率", s.ctr, "%", true]
+  ].map(([k, v, sub, hl]) =>
+    `<div class="kpi${hl ? " hl" : ""}"><div class="k">${k}</div>
+     <div class="v">${v}${sub ? `<small>${sub}</small>` : ""}</div></div>`
+  ).join("");
+
+  const stages = [
+    ["论文", s.papers, ""],
+    ["人群", s.people, "g2"],
+    ["草稿", s.msgs, "g3"],
+    ["已投递", s.sent, "g4"],
+    ["点击", s.uniqueClickers, "g5"]
+  ];
+  const max = Math.max(1, ...stages.map(x => x[1]));
+  $("funnel").innerHTML = stages.map((st, i) => {
+    // 从「草稿」才开始谈转化；论文→人群、人群→草稿是 1:1 生成关系，不显示百分比
+    const prev = i >= 2 ? stages[i - 1][1] : null;
+    const conv = prev ? (prev ? Math.round((st[1] / prev) * 1000) / 10 : 0) : null;
+    const w = Math.max(st[1] ? 2 : 0, (st[1] / max) * 100);
+    return `<div class="frow">
+      <div class="fname">${st[0]}</div>
+      <div class="ftrack"><div class="fbar ${st[2]}" style="width:${w}%"></div></div>
+      <div class="fmeta"><b>${st[1]}</b>${conv === null ? "" : `<i>${conv}%</i>`}</div>
+    </div>`;
+  }).join("");
+  $("funnelNote").textContent = s.clicks
+    ? `${s.clicks} 次点击 / ${s.uniqueClickers} 位独立访客`
+    : "点任意「追踪链接」或「模拟访客点击」即可产生真实点击事件";
+
+  renderTable();
+  $("snapInfo").textContent = `快照 ${SNAPSHOT.length} 篇 · ${new Set(SNAPSHOT.flatMap(p => p.authors.map(normName))).size} 位作者 · 抓取于 ${BUILD_DATE}`;
+}
+
+function renderTable() {
+  const kw = $("inpFilter").value.trim().toLowerCase();
+  const rows = state.people.filter(p =>
+    !kw || p.name.toLowerCase().includes(kw) || p.paper.toLowerCase().includes(kw));
+  $("tblCount").textContent = `${rows.length} / ${state.people.length} 人`;
+
+  if (!state.people.length) {
+    $("tbl").innerHTML = `<tr><td colspan="5"><div class="empty">
+      <b>还没有人群数据</b>选一个数据源点「载入人群」，会从 arXiv 真实快照里按作者去重建名单
+    </div></td></tr>`;
+    return;
+  }
+  if (!rows.length) {
+    $("tbl").innerHTML = `<tr><td colspan="5"><div class="empty"><b>没有匹配的联系人</b>换个关键词试试</div></td></tr>`;
+    return;
+  }
+
+  const clickMap = new Map();
+  for (const c of state.clicks) clickMap.set(c.hash, (clickMap.get(c.hash) || 0) + 1);
+  const msgMap = new Map(state.msgs.map(m => [m.hash, m]));
+
+  $("tbl").innerHTML = rows.map(p => {
+    const m = msgMap.get(p.hash);
+    const clicks = clickMap.get(p.hash) || 0;
+    const initial = (p.name.match(/[A-Za-z\u4e00-\u9fa5]/) || ["?"])[0].toUpperCase();
+    const status = (m && m.sent ? `<span class="chip sent">已投递</span>` : `<span class="chip draft">草稿</span>`)
+      + (clicks ? ` <span class="chip click">点击 ${clicks}</span>` : "");
+    const draft = m ? `主题：${m.subject}\n\n${m.body}` : "";
+    return `<tr>
+      <td><div class="who"><div class="ava" style="background:${avatarColor(p.name)}">${esc(initial)}</div>
+        <div>${esc(p.name)}<div class="m" style="font-size:11px;color:var(--muted)">${esc(p.published || "")}</div></div></div></td>
+      <td class="paper"><div class="t">${esc(p.paper)}</div>
+        <div class="m"><span class="tag">${esc(p.cat || "arXiv")}</span><span>${esc(p.source)}</span></div></td>
+      <td>${status}</td>
+      <td class="linkcell"><a href="#/c/${p.hash}" target="_blank" rel="noopener">#/c/${p.hash}</a></td>
+      <td><details><summary>查看</summary>
+        <pre>${esc(draft)}</pre>
+        <div class="row"><button class="btn sm" data-copy="${p.hash}">复制草稿</button></div>
+      </details></td>
+    </tr>`;
+  }).join("");
+}
+
+/* ---------- 名片页（接收方视角 + 点击埋点） ---------- */
+function showCard(hash) {
+  $("dash").style.display = "none";
+  $("cardView").classList.add("on");
+  document.title = "名片 · NeurIPS 2026";
+
+  const person = state.people.find(p => p.hash === hash);
+  const msg = state.msgs.find(m => m.hash === hash);
+  const paper = person ? person.paper : (msg ? "(未知来源)" : null);
+
+  if (!paper) {
+    $("cardBody").innerHTML = `
+      <h2>链接已失效</h2>
+      <p class="role">这条追踪链接不在本机记录里 —— 通常是因为 HTML 文件和名单数据不在同一个浏览器打开。</p>
+      <div class="cardfoot"><a class="cardback" href="#">← 返回看板</a></div>`;
+    return;
+  }
+
+  // 埋点：每次打开算一次点击
+  state.clicks.push({ hash, ts: nowStr(), ua: navigator.userAgent.slice(0, 160) });
+  saveState();
+
+  const lines = state.cfg.profile.split("\n").map(l => l.trim()).filter(Boolean);
+  const named = lines.map(l => {
+    const i = l.search(/[:：]/);
+    return i > 0 ? { k: l.slice(0, i), v: l.slice(i + 1).trim() } : null;
+  });
+  const allNamed = named.every(Boolean) && named.length > 0;
+  // 第一行已用作顶部角色行，列表里不再重复
+  const listRows = allNamed ? named.slice(1) : null;
+  const body = listRows && listRows.length
+    ? `<div class="plist">${listRows.map(x => `<div class="pitem"><div class="k">${esc(x.k)}</div><div class="v">${esc(x.v)}</div></div>`).join("")}</div>`
+    : allNamed ? "" : `<div class="pfree">${esc(state.cfg.profile)}</div>`;
+
+  const first = lines[0] || "";
+  const roleText = first.includes("：") ? first.split("：").slice(1).join("：")
+    : first.includes(":") ? first.split(":").slice(1).join(":") : "vibecoding 实践者";
+  const who = person ? person.name.split(" ")[0] : "我";
+
+  $("cardBody").innerHTML = `
+    <div class="avatar">${esc((who[0] || "R").toUpperCase())}</div>
+    <h2>${esc(who)}</h2>
+    <div class="role">${esc(roleText.trim())}</div>
+    ${body}
+    <div class="quotebox"><b>这条链接来自</b>《${esc(paper)}》—— 我看到您在 arXiv 上的这篇工作，想当面聊 15 分钟。</div>
+    <div class="cardfoot">
+      <span class="tracked">✓ 本次访问已记入触达漏斗</span>
+      <a class="cardback" href="#">返回看板 →</a>
+    </div>`;
+}
+
+function route() {
+  const m = location.hash.match(/^#\/c\/([0-9a-f]{10})$/);
+  if (m) return showCard(m[1]);
+  $("cardView").classList.remove("on");
+  $("dash").style.display = "";
+  document.title = "NeurIPS 2026 参会人触达 · 单文件版";
+  render();
+}
+
+/* ---------- 事件绑定 ---------- */
+function initUI() {
+  const labels = [...new Set(SNAPSHOT.map(p => p.query))];
+  $("selQuery").innerHTML =
+    labels.map(l => `<option value="${esc(l)}">${esc(l)}</option>`).join("") +
+    `<option value="__all__">全部 ${SNAPSHOT.length} 篇（混合去重）</option>`;
+
+  $("btnLoad").onclick = () => {
+    const n = Math.max(1, Math.min(200, parseInt($("inpLimit").value, 10) || 20));
+    $("inpLimit").value = n;
+    loadPeople($("selQuery").value, n);
+  };
+  $("btnSend").onclick = sendAll;
+  $("btnVisitor").onclick = pickVisitor;
+  $("btnReset").onclick = resetAll;
+  $("btnExport").onclick = exportCSV;
+  $("inpFilter").oninput = renderTable;
+
+  const openDrawer = () => {
+    $("cfgProfile").value = state.cfg.profile;
+    $("cfgSubject").value = state.cfg.subject;
+    $("cfgBody").value = state.cfg.body;
+    $("cfgSaved").textContent = "";
+    $("drawer").classList.add("on");
+    $("scrim").classList.add("on");
+  };
+  const closeDrawer = () => {
+    $("drawer").classList.remove("on");
+    $("scrim").classList.remove("on");
+  };
+  $("btnProfile").onclick = openDrawer;
+  $("btnCloseDrawer").onclick = closeDrawer;
+  $("scrim").onclick = closeDrawer;
+  $("btnSaveCfg").onclick = saveCfg;
+  $("btnDefaultCfg").onclick = () => {
+    $("cfgProfile").value = DEFAULT_CFG.profile;
+    $("cfgSubject").value = DEFAULT_CFG.subject;
+    $("cfgBody").value = DEFAULT_CFG.body;
+  };
+
+  // 表格内「复制草稿」用事件委托
+  $("tbl").addEventListener("click", ev => {
+    const btn = ev.target.closest("[data-copy]");
+    if (!btn) return;
+    const m = state.msgs.find(x => x.hash === btn.dataset.copy);
+    if (!m) return;
+    const text = `主题：${m.subject}\n\n${m.body}`;
+    const done = () => toast("已复制草稿");
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(text).then(done).catch(() => fallbackCopy(text, done));
+    } else fallbackCopy(text, done);
+  });
+
+  window.addEventListener("hashchange", route);
+
+  if (!store.ok) {
+    $("modeBadge").textContent = "单文件 · 本机存储不可用";
+    $("modeBadge").classList.add("local");
+  }
+}
+
+function fallbackCopy(text, done) {
+  const ta = document.createElement("textarea");
+  ta.value = text;
+  ta.style.position = "fixed";
+  ta.style.opacity = "0";
+  document.body.appendChild(ta);
+  ta.select();
+  try { document.execCommand("copy"); done(); } catch (e) { toast("复制失败，请手动选中", true); }
+  ta.remove();
+}
+
+initUI();
+route();
+</script>
+</body>
+</html>
